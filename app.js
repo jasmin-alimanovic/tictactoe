@@ -44,7 +44,11 @@ window.addEventListener("load", () => {
       endGame("O");
     }
     //provjera nerijesenog rezultata
-    if (provjeriNerijeseno()) {
+    if (
+      provjeriNerijeseno() &&
+      !provjeraPobjednika(player1) &&
+      !provjeraPobjednika(player2)
+    ) {
       endGame("Neriješeno!");
     }
     //smjena igraca
