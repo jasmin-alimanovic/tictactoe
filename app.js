@@ -33,9 +33,9 @@ window.addEventListener("load", () => {
   }
 
   //clikc handler
-  async function clickHandler(e) {
+  function clickHandler(e) {
     //prikaz X i O na klik
-    await prikaz(player1Turn, e);
+    prikaz(player1Turn, e);
     //provjera pobjednika
     if (provjeraPobjednika(player1)) {
       endGame("X");
@@ -44,16 +44,20 @@ window.addEventListener("load", () => {
       endGame("O");
     }
     //provjera nerijesenog rezultata
-    if (
-      nizPolja.every((p) => {
-        return p.innerHTML != "";
-      })
-    ) {
-      alert("Nerijeseno!");
-      startGame();
+    if (provjeriNerijeseno()) {
+      endGame("Neriješeno!");
     }
     //smjena igraca
     player1Turn = !player1Turn;
+  }
+
+  //provjera da li je rezultat nerijesen
+  function provjeriNerijeseno() {
+    let nerijeseno = nizPolja.every((p) => {
+      return p.innerHTML != "";
+    });
+
+    return nerijeseno;
   }
 
   //restart game
@@ -85,6 +89,11 @@ window.addEventListener("load", () => {
   //end game func
   function endGame(player) {
     document.querySelector("#rezultat").style.visibility = "visible";
-    document.querySelector("#rezultat h3").innerHTML = `${player} je pobijedio`;
+    if (player === "Neriješeno!") {
+      document.querySelector("#rezultat h3").innerHTML = player;
+    } else
+      document.querySelector(
+        "#rezultat h3"
+      ).innerHTML = `${player} je pobijedio`;
   }
 });
